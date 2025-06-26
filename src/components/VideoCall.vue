@@ -82,8 +82,13 @@ export default {
   },
   methods: {
     connectToServer() {
+      // Get the server URL from environment or use the current hostname
+      const serverUrl = process.env.VUE_APP_SERVER_URL || 
+        `${window.location.protocol}//${window.location.hostname}:5000`;
+      console.log('Connecting to server:', serverUrl);
+      
       // Connect to the signaling server
-      this.socket = io('http://localhost:5000');
+      this.socket = io(serverUrl);
       
       // Join the call
       this.socket.emit('join', { name: this.userName });
